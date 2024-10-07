@@ -9,7 +9,7 @@ const {
 
 const router = express.Router();
 
-router.get('/seed', seedData);
+router.get('/set-data', seedData);
 router.get('/list', getTransactionsByMonth);
 router.get('/statistics', getStatistics);
 router.get('/bar-chart', getBarChartData);
