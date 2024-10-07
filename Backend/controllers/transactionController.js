@@ -176,10 +176,6 @@ exports.getBarChartData = async (req, res) => {
 };
 
 
-
-
-
-
 // *********** Pie chart data
 const getCategoryCounts = (transactions) => {
   const categoryCounts = {};
@@ -189,7 +185,6 @@ const getCategoryCounts = (transactions) => {
   });
   return categoryCounts;
 };
-
 const prepareChartData = (categoryCounts) => {
   const labels = Object.keys(categoryCounts);
   const data = Object.values(categoryCounts);
@@ -241,3 +236,4 @@ exports.getPieChartData = async (req, res) => {
     res.status(500).json({ error: "Error fetching Pi-chart" });
   }
 };
+
