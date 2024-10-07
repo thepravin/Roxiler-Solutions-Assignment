@@ -253,10 +253,10 @@ exports.getCombinedData = async (req, res) => {
 
   try {
    
-    const transactionsPromise = axios.get(`${process.env.URL}/list?month=${month}`);
-    const statisticsPromise = axios.get(`${process.env.URL}/statistics?month=${month}`);
-    const barChartDataPromise = axios.get(`${process.env.URL}/bar-chart?month=${month}`);
-    const paiChartDataPromise = axios.get(`${process.env.URL}/pie-chart?month=${month}`);
+    const transactionsPromise = axios.get(`${process.env.URL}/api/transactions/list?month=${month}`);
+    const statisticsPromise = axios.get(`${process.env.URL}/api/transactions/statistics?month=${month}`);
+    const barChartDataPromise = axios.get(`${process.env.URL}/api/transactions/bar-chart?month=${month}`);
+    const paiChartDataPromise = axios.get(`${process.env.URL}/api/transactions/pie-chart?month=${month}`);
 
  
     const [transactionsResponse, statisticsResponse, paiChartDataResponse,barChartDataResponse] = await Promise.all([
