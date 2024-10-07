@@ -1,5 +1,4 @@
-import  { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -11,29 +10,18 @@ import {
   Legend,
 } from 'chart.js';
 
-
 // Registering the required components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const BarChart = ({ month }) => {
+const BarChart = ({ month, barChartData }) => {
   const [data, setData] = useState({ labels: [], datasets: [] });
-  
- 
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/api/transactions/bar-chart?month=${month}`);
-      
-
-        setData(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, [month]);
+    // Update state only when barChartData changes
+    if (barChartData) {
+      setData(barChartData);
+    }
+  }, [barChartData]); // Dependency array
 
   return (
     <div className="barchart-container">

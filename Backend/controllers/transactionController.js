@@ -4,29 +4,29 @@ const axios = require("axios");
 // Initialize database with seed data
 exports.setData = async (req, res) => {
   try {
-    // Fetch data from the external API using fetch
+
     const response = await fetch(
       "https://s3.amazonaws.com/roxiler.com/product_transaction.json"
     );
 
-    // Check if the response is OK (status in the range 200-299)
+   
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    // Parse the JSON data from the response
+
     const data = await response.json();
 
-    // Log the fetched data to the console for debugging
+  
     // console.log("Data: ", data);
 
-    // Insert the fetched data into the database
+
     await Transaction.insertMany(data);
 
     // Send a success response to the client
     res.status(200).json({ message: "Database seeded successfully" });
   } catch (error) {
-    // Log any errors to the console and return an error response
+    
     console.error("Error seeding data: ", error);
     res.status(500).json({ error: "Error seeding data" });
   }
@@ -68,7 +68,7 @@ exports.getTransactionsByMonth = async (req, res) => {
 exports.getStatistics = async (req, res) => {
   const { month } = req.query;
 
-  // Convert month to a number and validate
+ 
   const monthNum = Number(month);
   if (isNaN(monthNum) || monthNum < 1 || monthNum > 12) {
     return res
@@ -79,7 +79,7 @@ exports.getStatistics = async (req, res) => {
       });
   }
   try {
-    // Fetch transactions for the specified month across all years
+   
     const data = await Transaction.find({
       $expr: {
         $eq: [{ $month: "$dateOfSale" }, monthNum],
@@ -208,7 +208,7 @@ const prepareChartData = (categoryCounts) => {
 exports.getPieChartData = async (req, res) => {
   const { month } = req.query;
 
-  // Convert month to a number and validate
+ 
   const monthNum = Number(month);
   if (isNaN(monthNum) || monthNum < 1 || monthNum > 12) {
     return res
@@ -220,7 +220,7 @@ exports.getPieChartData = async (req, res) => {
   }
 
   try {
-    // Fetch transactions for the specified month across all years
+    
     const data = await Transaction.find({
       $expr: {
         $eq: [{ $month: "$dateOfSale" }, monthNum],
@@ -252,13 +252,13 @@ exports.getCombinedData = async (req, res) => {
   }
 
   try {
-    // Fetching data from all three endpoints
+   
     const transactionsPromise = axios.get(`${process.env.URL}/list?month=${month}`);
     const statisticsPromise = axios.get(`${process.env.URL}/statistics?month=${month}`);
     const barChartDataPromise = axios.get(`${process.env.URL}/bar-chart?month=${month}`);
     const paiChartDataPromise = axios.get(`${process.env.URL}/pie-chart?month=${month}`);
 
-    // Wait for all promises to resolve
+ 
     const [transactionsResponse, statisticsResponse, paiChartDataResponse,barChartDataResponse] = await Promise.all([
       transactionsPromise,
       statisticsPromise,
@@ -266,7 +266,7 @@ exports.getCombinedData = async (req, res) => {
       barChartDataPromise,
     ]);
 
-    // Combine the results
+   
     const combinedData = {
       transactions: transactionsResponse.data,
       statistics: statisticsResponse.data,
@@ -276,7 +276,7 @@ exports.getCombinedData = async (req, res) => {
 
     // console.log(combinedData)
 
-    // Send combined response
+   
     res.status(200).json(combinedData);
   } catch (error) {
     console.error("Error fetching combined data:", error);

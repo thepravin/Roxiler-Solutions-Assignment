@@ -1,34 +1,19 @@
 // PieChart.js
-import  { useEffect, useState } from 'react';
+import React from 'react';
 import { Pie } from 'react-chartjs-2';
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js'; // Import necessary elements
 
-
 Chart.register(ArcElement, Tooltip, Legend); // Register the elements
 
-const PieChart = ({ month }) => {
-    const [chartData, setChartData] = useState({});
-
-    useEffect(() => {
-        const fetchTransactions = async () => {
-            try {
-                const response = await fetch(`http://localhost:5000/api/transactions/pie-chart?month=${month}`);
-                const data = await response.json();                
-                setChartData(data);
-            } catch (error) {
-                console.error("Error fetching transactions:", error);
-            }
-        };
-
-        fetchTransactions();
-    }, [month]); 
-
+const PieChart = ({ month, pieChartData }) => {
     return (
         <div className="pie-chart-container">
-            <h2 className="pie-chart-title">Transaction Categories for {new Date(0, month - 1).toLocaleString('default', { month: 'long' })}</h2>
-            {chartData.labels ? (
+            <h2 className="pie-chart-title">
+                Transaction Categories for {new Date(0, month - 1).toLocaleString('default', { month: 'long' })}
+            </h2>
+            {pieChartData.labels ? (
                 <Pie 
-                    data={chartData} 
+                    data={pieChartData} 
                     options={{
                         responsive: true,
                         plugins: {

@@ -1,38 +1,28 @@
 import { useEffect, useState } from 'react'; 
 import './TransactionsTable.css'; // Import the CSS file
 
-const TransactionsTable = ({ month }) => {
-    const [data, setData] = useState([]); // Initialize as an empty array
+const TransactionsTable = ({ month, transactions }) => {
+    const [data, setData] = useState(transactions); // Initialize with transactions prop
     const [search, setSearch] = useState("");
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
-    const fetchTransactions = async (month, searchQuery = "", page = 1) => {
-        try {
-            const response = await fetch(`http://localhost:5000/api/transactions/list?month=${month}`);
-            const result = await response.json();
-
-            // Filter the results based on the search query
-            const filteredData = result.filter(transaction => 
-                transaction.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                transaction.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                transaction.category.toLowerCase().includes(searchQuery.toLowerCase())
-            );
-
-            const startIndex = (page - 1) * 10;
-            const endIndex = startIndex + 10;
-            const paginatedData = filteredData.slice(startIndex, endIndex);
-
-            setData(paginatedData);
-            setTotalPages(Math.ceil(filteredData.length / 10)); // Update total pages
-        } catch (error) {
-            console.error("Error fetching transactions:", error);
-        }
-    };
-
     useEffect(() => {
-        fetchTransactions(month, search);
-    }, [month, search, page]);
+        // Filter the transactions based on the search query
+        const filteredData = transactions.filter(transaction => 
+            transaction.title.toLowerCase().includes(search.toLowerCase()) ||
+            transaction.description.toLowerCase().includes(search.toLowerCase()) ||
+            transaction.category.toLowerCase().includes(search.toLowerCase())
+        );
+
+        // Paginate the filtered results
+        const startIndex = (page - 1) * 10;
+        const endIndex = startIndex + 10;
+        const paginatedData = filteredData.slice(startIndex, endIndex);
+
+        setData(paginatedData);
+        setTotalPages(Math.ceil(filteredData.length / 10)); // Update total pages
+    }, [transactions, search, page]);
 
     const handleSearchChange = (e) => {
         const query = e.target.value;
@@ -58,13 +48,13 @@ const TransactionsTable = ({ month }) => {
         <div className="transactions-table-container">
             <div className='header-container'>
                 <input
-                type="text"
-                placeholder="Search transactions..."
-                value={search}
-                onChange={handleSearchChange}
-                className="search-input"
-            />
-            <h2 className=''>Transaction List for {new Date(0, month - 1).toLocaleString('default', { month: 'long' })}</h2>
+                    type="text"
+                    placeholder="Search transactions..."
+                    value={search}
+                    onChange={handleSearchChange}
+                    className="search-input"
+                />
+                <h2>Transaction List for {new Date(0, month - 1).toLocaleString('default', { month: 'long' })}</h2>
             </div>
             <table className="transactions-table">
                 <thead>
@@ -80,7 +70,7 @@ const TransactionsTable = ({ month }) => {
                 <tbody>
                     {data.length > 0 ? (
                         data.map(transaction => (
-                            <tr key={transaction._id.$oid}>
+                            <tr key={transaction._id}>
                                 <td>{id++}</td>
                                 <td>{transaction.title}</td>
                                 <td>{transaction.price.toFixed(2)}</td>
