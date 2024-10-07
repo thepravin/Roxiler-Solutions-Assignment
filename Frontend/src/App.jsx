@@ -15,7 +15,7 @@ const App = () => {
     useEffect(() => {
         const apiCall = async (month) => {
             try {
-                const response = await fetch(`http://localhost:5000/api/transactions/combined-data?month=${month}`);
+                const response = await fetch(`${import.meta.env.VITE_URL}/combined-data?month=${month}`);
                 const result = await response.json();
                 
                 // Set state with respective data
