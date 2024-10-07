@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import TransactionsTable from './components/TransactionsTable'; // Adjust the path as necessary
 import './index.css';
+import Statistics from './components/Statistics';
 
 const App = () => {
     const [month, setMonth] = useState(3); // Default to March
@@ -22,7 +23,12 @@ const App = () => {
                     ))}
                 </select>
             </div>
-            <TransactionsTable month={month} />
+            <div className="container"> {/* Flex container for side-by-side layout */}
+                <div className="transactions-table"> {/* Optional wrapper for styling */}
+                    <TransactionsTable month={month} />
+                </div>
+                <Statistics month={month} />
+            </div>
         </div>
     );
 };

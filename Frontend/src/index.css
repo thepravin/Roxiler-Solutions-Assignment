@@ -37,3 +37,60 @@
   border-color: #4CAF50;
   box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
 }
+
+
+/* Statics Component */
+
+.statistics-box {
+  background-color: #f8f9fa; /* Light background */
+  border: 1px solid #dee2e6; /* Light border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 20px; /* Padding for spacing */
+  margin: 20px 0; /* Margin for spacing */
+  margin-right: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: transform 0.2s; /* Animation on hover */
+}
+
+.statistics-box:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  
+}
+
+.statistics-box h2 {
+  font-size: 1.5rem; /* Larger font for heading */
+  color: #343a40; /* Dark text color */
+  margin-bottom: 15px; /* Spacing below heading */
+}
+
+.statistics-box p {
+  font-size: 1rem; /* Regular font size */
+  color: #495057; /* Slightly lighter text color */
+  margin: 8px 0; /* Spacing between paragraphs */
+}
+
+.statistics-box p strong {
+  color: #007bff; /* Blue color for emphasis */
+}
+
+.container {
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-between; /* Space items evenly */
+  align-items: flex-start; /* Align items at the start of the container */
+  margin-top: 20px; /* Add some space above the container */
+}
+
+.transactions-table {
+  flex: 1; /* Allow the table to take available space */
+  margin-right: 20px; /* Add space between the table and statistics */
+}
+
+.statistics-box {
+  width: 300px; /* Fixed width for statistics box */
+  /* Include previously defined styles for the statistics box */
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
