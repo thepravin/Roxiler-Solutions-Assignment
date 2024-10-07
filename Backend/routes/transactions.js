@@ -1,15 +1,15 @@
 const express = require('express');
-const {
-    seedData,
+const {   
     getTransactionsByMonth,
     getStatistics,
     getBarChartData,
-    getPieChartData
+    getPieChartData,
+    setData
 } = require('../controllers/transactionController');
 
 const router = express.Router();
 
-router.get('/set-data', seedData);
+router.get('/set-data', setData);
 router.get('/list', getTransactionsByMonth);
 router.get('/statistics', getStatistics);
 router.get('/bar-chart', getBarChartData);

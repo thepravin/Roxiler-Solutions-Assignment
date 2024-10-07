@@ -2,7 +2,7 @@ const Transaction = require("../models/Transaction");
 const axios = require("axios");
 
 // Initialize database with seed data
-exports.seedData = async (req, res) => {
+exports.setData = async (req, res) => {
   try {
     // Fetch data from the external API using fetch
     const response = await fetch(
