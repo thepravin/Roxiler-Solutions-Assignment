@@ -18,17 +18,19 @@ label {
     font-weight: bold;
 }
 
-select, .search-input {
+ .search-input {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    margin-left: 10px;
+    margin-left: 30px;
+    margin-bottom: 10px;
+   
     flex: 1;
 }
 
 .search-input {
     margin-left: 20px;
-    width: 200px;
+    width: 200px;    
 }
 
 .transactions-table {
@@ -69,6 +71,7 @@ button {
     background-color: #4CAF50;
     color: white;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 button:disabled {
