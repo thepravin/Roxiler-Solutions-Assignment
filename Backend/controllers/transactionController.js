@@ -237,3 +237,49 @@ exports.getPieChartData = async (req, res) => {
   }
 };
 
+
+
+// Combined API to fetch data from multiple sources
+exports.getCombinedData = async (req, res) => {
+  const { month } = req.query;
+
+  // Convert month to a number and validate
+  const monthNum = Number(month);
+  if (isNaN(monthNum) || monthNum < 1 || monthNum > 12) {
+    return res.status(400).json({
+      error: "Invalid month provided. Please provide a month between 1 and 12.",
+    });
+  }
+
+  try {
+    // Fetching data from all three endpoints
+    const transactionsPromise = axios.get(`${process.env.URL}/list?month=${month}`);
+    const statisticsPromise = axios.get(`${process.env.URL}/statistics?month=${month}`);
+    const barChartDataPromise = axios.get(`${process.env.URL}/bar-chart?month=${month}`);
+    const paiChartDataPromise = axios.get(`${process.env.URL}/pie-chart?month=${month}`);
+
+    // Wait for all promises to resolve
+    const [transactionsResponse, statisticsResponse, paiChartDataResponse,barChartDataResponse] = await Promise.all([
+      transactionsPromise,
+      statisticsPromise,
+      paiChartDataPromise,
+      barChartDataPromise,
+    ]);
+
+    // Combine the results
+    const combinedData = {
+      transactions: transactionsResponse.data,
+      statistics: statisticsResponse.data,
+      barChartData: barChartDataResponse.data,
+      paiChartData: paiChartDataResponse.data,
+    };
+
+    // console.log(combinedData)
+
+    // Send combined response
+    res.status(200).json(combinedData);
+  } catch (error) {
+    console.error("Error fetching combined data:", error);
+    res.status(500).json({ error: "Error fetching combined data" });
+  }
+};
