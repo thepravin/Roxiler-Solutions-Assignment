@@ -1,8 +1,8 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 
-const BarChart = (month) => {
+const BarChart = ({ month }) => {
   const [barChartData, setBarChartData] = useState([]);
 
   useEffect(() => {
@@ -11,7 +11,7 @@ const BarChart = (month) => {
 
   const fetchBarChartData = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:8080/api/transactions/bar-chart`, {
+      const { data } = await axios.get(`http://localhost:5000/api/transactions/bar-chart`, {
         params: { month },
       });
       setBarChartData(data);
@@ -21,19 +21,19 @@ const BarChart = (month) => {
   };
 
   const chartData = {
-    labels: barChartData.map((item) => item._id),
+    labels: barChartData.map((item) => item._id), // Adjust according to your data structure
     datasets: [
       {
-        label: 'Items in Price Range',
+        label: 'Number of Items by Price Range',
         data: barChartData.map((item) => item.count),
-        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+        backgroundColor: '#36A2EB',
       },
     ],
   };
 
   return (
     <div className="bar-chart">
-      <h2>Price Range Distribution for {month}</h2>
+      <h2>Price Range Distribution for {new Date(0, month - 1).toLocaleString('default', { month: 'long' })}</h2>
       <Bar data={chartData} />
     </div>
   );

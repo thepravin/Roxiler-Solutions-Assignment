@@ -2,6 +2,7 @@ import { useState } from 'react';
 import TransactionsTable from './components/TransactionsTable'; // Adjust the path as necessary
 import './index.css';
 import Statistics from './components/Statistics';
+import PieChart from './components/PieChart';
 
 const App = () => {
     const [month, setMonth] = useState(3); // Default to March
@@ -28,6 +29,7 @@ const App = () => {
                     <TransactionsTable month={month} />
                 </div>
                 <Statistics month={month} />
+                <PieChart month={month}/>
             </div>
         </div>
     );
