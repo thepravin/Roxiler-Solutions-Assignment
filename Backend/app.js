@@ -9,6 +9,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app .get('/',
+  (req, res) =>{
+  res. send( 'Home api running');
+  })
+
 const PORT = process.env.PORT || 5000;
 
 // Connect to MongoDB without deprecated options
