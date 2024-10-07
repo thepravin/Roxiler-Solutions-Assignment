@@ -4,6 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const transactionRoutes = require('./routes/transactions.js');
+const { setData, getTransactionsByMonth, getStatistics, getBarChartData, getPieChartData, getCombinedData } = require('./controllers/transactionController.js');
 
 const app = express();
 app.use(cors());
@@ -22,7 +23,12 @@ mongoose.connect(process.env.MONGO_URI)
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Use your routes
-app.use('/api/transactions', transactionRoutes);
+app.get('/set-data', setData);
+app.get('/list', getTransactionsByMonth);
+app.get('/statistics', getStatistics);
+app.get('/bar-chart', getBarChartData);
+app.get('/pie-chart', getPieChartData);
+app.get('/combined-data', getCombinedData); 
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
