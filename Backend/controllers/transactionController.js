@@ -39,77 +39,72 @@ exports.getTransactionsByMonth = async (req, res) => {
   // Convert month to a number and validate
   const monthNum = Number(month);
   if (isNaN(monthNum) || monthNum < 1 || monthNum > 12) {
-    return res.status(400).json({ error: "Invalid month provided. Please provide a month between 1 and 12." });
+    return res
+      .status(400)
+      .json({
+        error:
+          "Invalid month provided. Please provide a month between 1 and 12.",
+      });
   }
 
   try {
     // Fetch transactions for the specified month across all years
     const transactions = await Transaction.find({
       $expr: {
-        $eq: [{ $month: "$dateOfSale" }, monthNum]
-      }
+        $eq: [{ $month: "$dateOfSale" }, monthNum],
+      },
     });
 
     // console.log('Fetched Transactions:', transactions); // Log the transactions fetched
 
     res.status(200).json(transactions);
   } catch (error) {
-    console.error('Error fetching transactions:', error);
+    console.error("Error fetching transactions:", error);
     res.status(500).json({ error: "Error fetching transactions" });
   }
 };
 
-
-
-
-
 // Statistics for the selected month
 exports.getStatistics = async (req, res) => {
-  try {
-    const { month } = req.query;
+  const { month } = req.query;
 
-    // Validate month input
-    if (!month || isNaN(month) || month < 1 || month > 12) {
-      return res.status(400).json({ error: 'Invalid month provided' });
-    }
-
-    // Create date range for the specified month
-    const startDate = new Date(`2021-${month < 10 ? '0' : ''}${month}-01T00:00:00Z`);
-    const endDate = new Date(startDate);
-    endDate.setMonth(endDate.getMonth() + 1); // Move to the first day of the next month
-
-    // Execute aggregation pipeline
-    const statistics = await Transaction.aggregate([
-      {
-        $match: {
-          dateOfSale: {
-            $gte: startDate,
-            $lt: endDate,
-          },
-        },
-      },
-      {
-        $group: {
-          _id: null,
-          totalSaleAmount: { $sum: { $cond: [{ $eq: ["$sold", true] }, "$price", 0] } },
-          totalSoldItems: { $sum: { $cond: [{ $eq: ["$sold", true] }, 1, 0] } },
-          totalNotSoldItems: { $sum: { $cond: [{ $eq: ["$sold", false] }, 1, 0] } },
-        },
-      },
-    ]);
-
-    // Return the statistics or an empty object if no data is found
-    res.status(200).json(statistics.length ? statistics[0] : {
-      totalSaleAmount: 0,
-      totalSoldItems: 0,
-      totalNotSoldItems: 0,
-    });
-  } catch (error) {
-    console.error('Error fetching statistics:', error);
-    res.status(500).json({ error: 'Error fetching statistics'});
+  // Convert month to a number and validate
+  const monthNum = Number(month);
+  if (isNaN(monthNum) || monthNum < 1 || monthNum > 12) {
+    return res
+      .status(400)
+      .json({
+        error:
+          "Invalid month provided. Please provide a month between 1 and 12.",
+      });
   }
-}
+  try {
+    // Fetch transactions for the specified month across all years
+    const data = await Transaction.find({
+      $expr: {
+        $eq: [{ $month: "$dateOfSale" }, monthNum],
+      },
+    });
 
+    let sales = 0;
+    let soldItems = 0;
+    let notSoldItems = 0;
+
+    data.forEach((transaction) => {
+      if (transaction.sold) {
+        sales += transaction.price;
+        soldItems += 1;
+      } else {
+        notSoldItems += 1;
+      }
+    });
+
+    res.status(200).json({sales,soldItems,notSoldItems});
+  } catch (error) {
+    console.error("Error fetching Statistics:", error);
+    res.status(500).json({ error: "Error fetching Statistics" });
+  }
+};
 
 // Bar chart data
 exports.getBarChartData = async (req, res) => {

@@ -12,28 +12,15 @@ const Statistics = ({ month }) => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await fetch(`http://localhost:5000/api/transactions/list?month=${month}`);
+                const response = await fetch(`http://localhost:5000/api/transactions/statistics?month=${month}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                const data = await response.json();
+                const data = await response.json();              
 
-                let sales = 0;
-                let soldItems = 0;
-                let notSoldItems = 0;
-
-                data.forEach(transaction => {
-                    if (transaction.sold) {
-                        sales += transaction.price;
-                        soldItems += 1;
-                    } else {
-                        notSoldItems += 1;
-                    }
-                });
-
-                setTotalSales(sales);
-                setTotalSoldItems(soldItems);
-                setTotalNotSoldItems(notSoldItems);
+                setTotalSales(data.sales);
+                setTotalSoldItems(data.soldItems);
+                setTotalNotSoldItems(data.notSoldItems);
             } catch (error) {
                 setError(error.message);
             } finally {
