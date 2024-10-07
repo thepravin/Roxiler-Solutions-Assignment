@@ -130,19 +130,64 @@ exports.getBarChartData = async (req, res) => {
   }
 };
 
-// Pie chart data
+// *********** Pie chart data
+const getCategoryCounts = (transactions) => {
+  const categoryCounts = {};
+  transactions.forEach(transaction => {
+      const category = transaction.category;
+      categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+  });
+  return categoryCounts;
+};
+
+const prepareChartData = (categoryCounts) => {
+  const labels = Object.keys(categoryCounts);
+  const data = Object.values(categoryCounts);
+
+  return {
+      labels: labels,
+      datasets: [{
+          label: 'Transaction Categories',
+          data: data,
+          backgroundColor: [
+              '#FF6384',
+              '#36A2EB',
+              '#FFCE56',
+              '#4BC0C0',
+              '#9966FF',
+              '#FF9F40',
+          ],
+      }],
+  };
+};
 exports.getPieChartData = async (req, res) => {
   const { month } = req.query;
-  const regexMonth = new RegExp(month, "i");
+
+  // Convert month to a number and validate
+  const monthNum = Number(month);
+  if (isNaN(monthNum) || monthNum < 1 || monthNum > 12) {
+    return res
+      .status(400)
+      .json({
+        error:
+          "Invalid month provided. Please provide a month between 1 and 12.",
+      });
+  }
 
   try {
-    const pieChartData = await Transaction.aggregate([
-      { $match: { dateOfSale: { $regex: regexMonth } } },
-      { $group: { _id: "$category", count: { $sum: 1 } } },
-    ]);
+    // Fetch transactions for the specified month across all years
+    const data = await Transaction.find({
+      $expr: {
+        $eq: [{ $month: "$dateOfSale" }, monthNum],
+      },
+    });
 
-    res.status(200).json(pieChartData);
+    const categoryCounts = getCategoryCounts(data);
+    const preparedData = prepareChartData(categoryCounts);   
+
+    res.status(200).json(preparedData);
   } catch (error) {
-    res.status(500).json({ error: "Error fetching pie chart data" });
+    console.error("Error fetching Pi-chart:", error);
+    res.status(500).json({ error: "Error fetching Pi-chart" });
   }
 };
