@@ -106,29 +106,79 @@ exports.getStatistics = async (req, res) => {
   }
 };
 
+
 // Bar chart data
 exports.getBarChartData = async (req, res) => {
   const { month } = req.query;
-  const regexMonth = new RegExp(month, "i");
+
+  const priceRanges = [
+    { range: '0 - 100', min: 0, max: 100 },
+    { range: '101 - 200', min: 101, max: 200 },
+    { range: '201 - 300', min: 201, max: 300 },
+    { range: '301 - 400', min: 301, max: 400 },
+    { range: '401 - 500', min: 401, max: 500 },
+    { range: '501 - 600', min: 501, max: 600 },
+    { range: '601 - 700', min: 601, max: 700 },
+    { range: '701 - 800', min: 701, max: 800 },
+    { range: '801 - 900', min: 801, max: 900 },
+    { range: '901 and above', min: 901, max: Infinity },
+  ];
+
+  // Convert month to a number and validate
+  const monthNum = Number(month);
+  if (isNaN(monthNum) || monthNum < 1 || monthNum > 12) {
+    return res
+      .status(400)
+      .json({
+        error:
+          "Invalid month provided. Please provide a month between 1 and 12.",
+      });
+  }
 
   try {
-    const barChartData = await Transaction.aggregate([
-      { $match: { dateOfSale: { $regex: regexMonth } } },
-      {
-        $bucket: {
-          groupBy: "$price",
-          boundaries: [0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000],
-          default: "901-above",
-          output: { count: { $sum: 1 } },
-        },
+    // Fetch transactions for the specified month across all years
+    const response = await Transaction.find({
+      $expr: {
+        $eq: [{ $month: "$dateOfSale" }, monthNum],
       },
-    ]);
+    });
 
-    res.status(200).json(barChartData);
+    const transactions = response; // Assuming the response is an array of items
+
+    const counts = Array(priceRanges.length).fill(0);
+
+    transactions.forEach((item) => {
+      const price = item.price;
+      priceRanges.forEach((range, index) => {
+        if (price >= range.min && price <= range.max) {
+          counts[index]++;
+        }
+      });
+    });
+
+    const chartData = {
+      labels: priceRanges.map(range => range.range),
+      datasets: [
+        {
+          label: 'Number of Items',
+          data: counts,
+          backgroundColor: 'rgba(75, 192, 192, 0.6)',
+        },
+      ],
+    };
+    
+
+    res.status(200).json(chartData);
   } catch (error) {
-    res.status(500).json({ error: "Error fetching bar chart data" });
+    console.error("Error fetching transactions:", error);
+    res.status(500).json({ error: "Error fetching transactions" });
   }
 };
+
+
+
+
+
 
 // *********** Pie chart data
 const getCategoryCounts = (transactions) => {
