@@ -53,6 +53,7 @@
   margin-right: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   transition: transform 0.2s; /* Animation on hover */
+  
 }
 
 .statistics-box:hover {
@@ -67,7 +68,7 @@
 }
 
 .statistics-box p {
-  font-size: 1rem; /* Regular font size */
+  font-size: 1.2rem; /* Regular font size */
   color: #495057; /* Slightly lighter text color */
   margin: 8px 0; /* Spacing between paragraphs */
 }
@@ -80,7 +81,7 @@
   display: flex; /* Use flexbox for layout */
   justify-content: space-between; /* Space items evenly */
   align-items: flex-start; /* Align items at the start of the container */
-  margin-top: 20px; /* Add some space above the container */
+  margin-top: 20px; /* Add some space above the container */ 
 }
 
 .transactions-table {
@@ -102,6 +103,7 @@
   display: flex; /* Flexbox for side-by-side layout */
   justify-content: space-between; /* Space items evenly */
   margin-top: 20px; /* Space above charts */
+  
 }
 
 .pie-chart, .bar-chart {
@@ -136,4 +138,37 @@
 .loading-message {
   font-size: 16px; /* Reduced font size */
   color: #555;
+}
+
+/* BarChart.css */
+.barchart-container {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Center align elements */
+  margin-top: 20px; /* Space above the chart */
+  padding: 20px; /* Padding around the container */
+  background-color: #f9f9f9; /* Light background for better visibility */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  width: 100%; /* Ensure the container takes full width of parent */
+  max-width: 600px; /* Maximum width for the container */
+}
+
+.barchart-title {
+  font-size: 1.5rem; /* Title font size */
+  color: #343a40; /* Dark text color */
+  margin-bottom: 15px; /* Space below the title */
+}
+
+.chart {
+  width: 100%; /* Ensure the chart takes full width of its container */
+  height: 300px; /* Set a height for the chart */
+  max-width: 100%; /* Ensure chart does not exceed container's width */
+}
+
+
+.statistics-pie{
+  display: flex; /* Flexbox for Statistics and PieChart side by side */
+  justify-content: space-between; /* Space them evenly */
+  margin-bottom: 20px; /* Space between charts and BarChart */
 }

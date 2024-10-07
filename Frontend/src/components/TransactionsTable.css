@@ -82,3 +82,18 @@ button:disabled {
 button:hover:not(:disabled) {
     background-color: #45a049;
 }
+
+.header-container {
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Vertically center items */
+    justify-content: space-between; /* Space items evenly */
+    margin-bottom: 5px; /* Space below the header */
+}
+
+.search-input {
+    margin-right: 20px; /* Space between the input and the heading */
+    padding: 5px; /* Add some padding for better aesthetics */
+    border: 1px solid #ccc; /* Border styling */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Font size for input */
+}

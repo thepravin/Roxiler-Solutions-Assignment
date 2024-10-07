@@ -25,7 +25,7 @@ const PieChart = ({ month }) => {
 
     return (
         <div className="pie-chart-container">
-            <h2 className="pie-chart-title">Transaction Categories</h2>
+            <h2 className="pie-chart-title">Transaction Categories for {new Date(0, month - 1).toLocaleString('default', { month: 'long' })}</h2>
             {chartData.labels ? (
                 <Pie 
                     data={chartData} 

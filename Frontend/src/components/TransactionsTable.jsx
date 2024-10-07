@@ -56,14 +56,16 @@ const TransactionsTable = ({ month }) => {
 
     return (
         <div className="transactions-table-container">
-            <input
+            <div className='header-container'>
+                <input
                 type="text"
                 placeholder="Search transactions..."
                 value={search}
                 onChange={handleSearchChange}
                 className="search-input"
             />
-
+            <h2 className=''>Transaction List for {new Date(0, month - 1).toLocaleString('default', { month: 'long' })}</h2>
+            </div>
             <table className="transactions-table">
                 <thead>
                     <tr>
