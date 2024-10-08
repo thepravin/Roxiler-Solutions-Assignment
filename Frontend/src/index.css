@@ -1,11 +1,9 @@
 
-
-
 .transaction-heading {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px; /* Space between heading and table */
+  margin-bottom: 20px; 
 }
 
 /* .transaction-heading {

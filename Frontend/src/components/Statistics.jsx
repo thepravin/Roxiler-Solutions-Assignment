@@ -1,5 +1,4 @@
-// components/Statistics.js
-import React from 'react';
+
 
 const Statistics = ({ month, statistics }) => {
     // Destructure with default values to avoid errors
