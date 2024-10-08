@@ -23,7 +23,7 @@ This project demonstrates a **MERN Stack** application with a backend built on *
 
 ## Deployment 🚀
 
-> **Note:** Please wait a little bit as it may take some time to fetch data from the MongoDB cluster.
+> **Note:** Please wait a moment, as it may take some time to fetch data due to the Render region issue (the backend is deployed on Render).
 > 
 ```
 https://roxiler-solutions-assignment-frontend-izdzizs8i.vercel.app/
