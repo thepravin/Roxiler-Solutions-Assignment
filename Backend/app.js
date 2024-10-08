@@ -16,12 +16,12 @@ app .get('/',
 
 const PORT = process.env.PORT || 5000;
 
-// Connect to MongoDB without deprecated options
+// Connect to MongoDB 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-// Use your routes
+// routes
 app.use('/api/transactions', transactionRoutes);
 
 app.listen(PORT, () => {

@@ -55,7 +55,7 @@ exports.getTransactionsByMonth = async (req, res) => {
       },
     });
 
-    // console.log('Fetched Transactions:', transactions); // Log the transactions fetched
+    // console.log('Fetched Transactions:', transactions); 
 
     res.status(200).json(transactions);
   } catch (error) {
