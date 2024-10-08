@@ -1,15 +1,18 @@
 # Roxiler Solutions Assignment
 
-## Table of Contents
-- [Overview](#overview)
-- [Deployment](#deployment-)
-- [How I Build](#-how-i-build)
-  - [Technologies Used](#technologies-used)
-- [Backend Overview](#backend-overview)
-  - [API Routes](#api-routes)
-- [Frontend Overview](#frontend-overview)
-  - [Components](#components)
-- [Video](#video)
+
+## 📚 Table of Contents
+
+- **[Overview](#overview)**
+- **[Deployment 🚀](#deployment-)**
+- **[How I Build 🛠️](#-how-i-build)**
+  - **[Technologies Used ](#technologies-used)**
+- **[Backend Overview 🌐](#backend-overview)**
+  - **[API Routes ](#api-routes)**
+- **[Frontend Overview 🎨](#frontend-overview)**
+  - **[Components ](#components)**
+- **[Video 📹](#video)**
+
 
 ## Overview
 
