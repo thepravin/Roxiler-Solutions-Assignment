@@ -30,6 +30,11 @@ https://roxiler-solutions-assignment-frontend-izdzizs8i.vercel.app/
 ```
 &nbsp;
 
+## Video
+
+
+https://github.com/user-attachments/assets/f1ffd442-69f9-4ce1-9a58-608d7b8fada1
+
 ---
 
 # 📝 How I Build 
@@ -99,12 +104,6 @@ The frontend of this project is built using React.js.
 
 4. **`TransactionsTable.jsx`**
    - The `TransactionsTable` component lists all product transactions for the selected month. It includes pagination and search functionality, allowing users to filter transactions based on product title, description, or price.
-
-
-## Video
-
-
-
 
 
 
