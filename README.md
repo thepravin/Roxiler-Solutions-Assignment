@@ -1,5 +1,16 @@
 # Roxiler Solutions Assignment
 
+## Table of Contents
+- [Overview](#overview)
+- [Deployment](#deployment-)
+- [How I Build](#-how-i-build)
+  - [Technologies Used](#technologies-used)
+- [Backend Overview](#backend-overview)
+  - [API Routes](#api-routes)
+- [Frontend Overview](#frontend-overview)
+  - [Components](#components)
+- [Video](#video)
+
 ## Overview
 
 This project demonstrates a **MERN Stack** application with a backend built on **Node.js, Express, and MongoDB**. The goal is to create APIs for fetching and processing product transactions from a third-party source and displaying them with pagination, search functionality, statistics, and visualizations on the frontend.
