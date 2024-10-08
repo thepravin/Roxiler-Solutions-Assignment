@@ -75,8 +75,8 @@ button {
 }
 
 button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+    /* background-color: #ccc; */
+    /* cursor: not-allowed; */
 }
 
 button:hover:not(:disabled) {
